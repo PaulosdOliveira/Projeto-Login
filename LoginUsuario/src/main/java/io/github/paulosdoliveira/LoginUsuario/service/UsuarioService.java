@@ -2,12 +2,16 @@ package io.github.paulosdoliveira.LoginUsuario.service;
 
 
 import io.github.paulosdoliveira.LoginUsuario.infra.Repository.UsuarioRepository;
+import io.github.paulosdoliveira.LoginUsuario.jwt.JwtService;
 import io.github.paulosdoliveira.LoginUsuario.model.Usuario;
 import io.github.paulosdoliveira.LoginUsuario.model.dto.CadastroUsuarioDTO;
 import io.github.paulosdoliveira.LoginUsuario.model.dto.ConsultaUsuarioDTO;
+import io.github.paulosdoliveira.LoginUsuario.model.dto.LoginUsuarioDTO;
 import io.github.paulosdoliveira.LoginUsuario.validation.UsuarioValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+import token.Token;
 
 @RequiredArgsConstructor
 @Service
@@ -16,6 +20,8 @@ public class UsuarioService {
     private final UsuarioRepository repository;
 
     private final UsuarioValidator validator;
+
+    private final JwtService jwtService;
 
     public void cadastrarUsuario(CadastroUsuarioDTO dados){
         validator.validar(dados.getEmail());
@@ -30,5 +36,14 @@ public class UsuarioService {
 
     public Usuario findByEmail(String email){
         return repository.findByEmail(email);
+    }
+
+    public Token logarUsuario( LoginUsuarioDTO dadosLogin){
+        var usuario = repository.findByEmail(dadosLogin.getEmail());
+        if(usuario != null){
+           return  jwtService.gerarToken(usuario);
+        }
+
+        throw new RuntimeException("Erro login");
     }
 }
