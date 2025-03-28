@@ -1,14 +1,15 @@
 package io.github.paulosdoliveira.LoginUsuario.controller;
 
 import io.github.paulosdoliveira.LoginUsuario.ex.EmailDuplicadoException;
+import io.github.paulosdoliveira.LoginUsuario.ex.respostaErro.ErroCampo;
+import io.github.paulosdoliveira.LoginUsuario.ex.respostaErro.ErroResposta;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.client.HttpServerErrorException;
-
+import java.util.ArrayList;
 import java.util.List;
 
 @RestControllerAdvice
@@ -22,9 +23,12 @@ public class ControllerException {
 
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public  List<FieldError> handlerCampoInvalidoException(MethodArgumentNotValidException e) {
-        List<FieldError> listaDeErros = e.getFieldErrors();
-        return listaDeErros;
+    public ErroResposta handlerCampoInvalidoException(MethodArgumentNotValidException e) {
+        List<ErroCampo> erros = new ArrayList<>();
+        for(FieldError erro: e.getFieldErrors()){
+            erros.add(new ErroCampo(erro.getField(), erro.getDefaultMessage()));
+        }
+        return new ErroResposta(erros);
     }
 
 
