@@ -1,4 +1,4 @@
-package token;
+package io.github.paulosdoliveira.LoginUsuario.token;
 
 import lombok.Data;
 

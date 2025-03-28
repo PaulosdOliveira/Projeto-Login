@@ -34,6 +34,7 @@ public class Usuario {
     private byte[] foto;
 
 
+
     public Usuario(CadastroUsuarioDTO dados){
         BeanUtils.copyProperties(dados, this);
     }

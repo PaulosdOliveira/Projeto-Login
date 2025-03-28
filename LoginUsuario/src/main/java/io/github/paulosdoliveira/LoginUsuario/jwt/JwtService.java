@@ -4,7 +4,7 @@ import io.github.paulosdoliveira.LoginUsuario.model.Usuario;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import token.Token;
+import io.github.paulosdoliveira.LoginUsuario.token.Token;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
