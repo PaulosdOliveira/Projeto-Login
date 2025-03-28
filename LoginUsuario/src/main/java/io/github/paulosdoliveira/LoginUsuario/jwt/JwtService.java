@@ -26,7 +26,6 @@ public class JwtService {
                 .expiration(getExpiration())
                 .claims(gerarClaims(usuario.getPerfil().toString()))
                 .compact();
-
         return new Token(token);
     }
 
@@ -54,8 +53,6 @@ public class JwtService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-        return "";
     }
 
 }

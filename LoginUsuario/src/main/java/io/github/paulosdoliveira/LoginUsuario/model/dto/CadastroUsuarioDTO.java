@@ -21,6 +21,5 @@ public class CadastroUsuarioDTO {
 
     @NotNull(message = "Campo obrigatório")
     private PerfilUsuario perfil;
-    private byte[] foto;
 
 }

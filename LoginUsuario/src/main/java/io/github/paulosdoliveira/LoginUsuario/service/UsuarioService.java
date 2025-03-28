@@ -10,8 +10,12 @@ import io.github.paulosdoliveira.LoginUsuario.model.dto.LoginUsuarioDTO;
 import io.github.paulosdoliveira.LoginUsuario.validation.UsuarioValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.multipart.MultipartFile;
 import token.Token;
+
+import java.io.IOException;
 
 @RequiredArgsConstructor
 @Service
@@ -45,5 +49,11 @@ public class UsuarioService {
         }
 
         throw new RuntimeException("Erro login");
+    }
+
+    @Transactional
+    public void salvarFoto(Long id, MultipartFile arquivo) throws IOException {
+        var usuario = repository.findById(id).orElseThrow( () -> new RuntimeException("Usuário não encontrado"));
+        usuario.setFoto(arquivo.getBytes());
     }
 }

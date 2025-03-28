@@ -26,8 +26,11 @@ public class Usuario {
     @Column(nullable = false , length = 300)
     private String senha;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private PerfilUsuario perfil;
+
+    @Column(columnDefinition = "longBlob")
     private byte[] foto;
 
 
