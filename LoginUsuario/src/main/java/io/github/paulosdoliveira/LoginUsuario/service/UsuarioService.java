@@ -64,4 +64,8 @@ public class UsuarioService {
         var usuario = repository.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
         usuario.setFoto(arquivo.getBytes());
     }
+
+    public byte[] buscarFoto(Long id){
+        return repository.buscarFoto(id);
+    }
 }

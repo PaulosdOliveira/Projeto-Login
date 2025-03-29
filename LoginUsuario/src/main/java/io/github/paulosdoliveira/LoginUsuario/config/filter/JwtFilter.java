@@ -33,7 +33,6 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = getToken(request);
-        System.out.println(token);
         if(token != null){
             String email = jwtService.getEmailByToken(token);
             var usuario = usuarioService.findByEmail(email);
@@ -51,7 +50,8 @@ public class JwtFilter extends OncePerRequestFilter {
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String requisicao = request.getRequestURI();
         String metodo = request.getMethod();
-        return requisicao.contains("/usuario") && metodo.equals(HttpMethod.POST.toString());
+        return requisicao.contains("/usuario") && metodo.equals(HttpMethod.POST.toString())
+               || requisicao.contains("/usuario/foto");
     }
 
     private String getToken(HttpServletRequest request){
